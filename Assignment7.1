@@ -13,11 +13,6 @@ df = pd.DataFrame({'From_To': ['LoNDon_paris', 'MAdrid_miLAN', 'londON_StockhOlm
 
 
 
-1. Some values in the the FlightNumber column are missing. These numbers are meant
-to increase by 10 with each row so 10055 and 10075 need to be put in place. Fill in
-these missing numbers and make the column an integer column (instead of a float
-column).
-
 import pandas as pd
 import numpy as np
 
@@ -30,10 +25,10 @@ df = pd.DataFrame({'From_To': ['LoNDon_paris', 'MAdrid_miLAN', 'londON_StockhOlm
 
 df
 
-
-2. The From_To column would be better as two separate columns! Split each string on
-the underscore delimiter _ to give a new temporary DataFrame with the correct values.
-Assign the correct column names to this temporary DataFrame.
+1. Some values in the the FlightNumber column are missing. These numbers are meant
+to increase by 10 with each row so 10055 and 10075 need to be put in place. Fill in
+these missing numbers and make the column an integer column (instead of a float
+column).
 
 #Fill in the missing numbers in the FlightNumber column (meant to increase by ten with each row) and make the column an integer column.  
 df['FlightNumber'].loc[1] = (df['FlightNumber'].iloc[0] + 10)
@@ -41,15 +36,22 @@ df['FlightNumber'].loc[3] = (df['FlightNumber'].iloc[2] + 10)
 df['FlightNumber'] = df['FlightNumber'].astype(int)
 df
 
-3. Notice how the capitalisation of the city names is all mixed up in this temporary
-DataFrame. Standardise the strings so that only the first letter is uppercase (e.g.
-"londON" should become "London".)
+
+2. The From_To column would be better as two separate columns! Split each string on
+the underscore delimiter _ to give a new temporary DataFrame with the correct values.
+Assign the correct column names to this temporary DataFrame.
 
 #Split the From_To column with '_' as the delimiter on a new temporary DataFrame. Assign the correct column names to this temporary DataFrame. 
 temporaryDataFrame = pd.DataFrame(df.From_To)
 temporaryDataFrame['From'] = temporaryDataFrame.From_To.str.split('_').str.get(0)
 temporaryDataFrame['To'] = temporaryDataFrame.From_To.str.split('_').str.get(1)
 temporaryDataFrame = temporaryDataFrame.drop('From_To', 1)
+temporaryDataFrame
+
+3. Notice how the capitalisation of the city names is all mixed up in this temporary
+DataFrame. Standardise the strings so that only the first letter is uppercase (e.g.
+"londON" should become "London".)
+
 temporaryDataFrame['From'] = temporaryDataFrame.From.str.title()
 temporaryDataFrame['To'] = temporaryDataFrame.To.str.title()
 
